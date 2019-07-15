@@ -1,0 +1,94 @@
+﻿<Window x:Class="BroccoliSchemer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BroccoliSchemer"
+        mc:Ignorable="d"
+        Title="BroccoliSchemer" Name="MainAppWindow" Height="768" Width="1024" WindowStyle="None" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
+        <Border Name="Toolbar" Grid.Row="0">
+            <!--Toolbar section-->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Name="Logo" Grid.Row="0">
+                    <!--Put minimize, maximize and close buttons-->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="0" Background="#1c4b82">
+                            <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,5,0,0">
+                                <Image Source="Design/Icon/icon.png"/>
+                                <Label Content="Broccoli Schemer" Foreground="#dae1e7"/>
+                            </DockPanel>
+                        </Border>
+                        <Border Grid.Column="1" Background="#dae1e7">
+                            <DockPanel VerticalAlignment="Top" HorizontalAlignment="Right">
+                                <Label Name="MinimizingButton" MouseLeftButtonDown="MinimizingButton_MouseLeftButtonDown">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Content" Value="____"/>
+                                            <Setter Property="Foreground" Value="#1c4b82"/>
+                                            <Setter Property="FontWeight" Value="ExtraBold"/>
+                                            <Setter Property="VerticalAlignment" Value="Bottom"/>
+                                            <Setter Property="FontSize" Value="16"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#1c4b82" />
+                                                    <Setter Property="Foreground" Value="#dae1e7"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Image Name="ChangeStateButton" MouseLeftButtonDown="ChangeStateButton_MouseLeftButtonDown">
+                                    <Image.Style>
+                                        <Style TargetType="Image">
+                                            <Setter Property="Source" Value="Design/Images/CornerButtons/minimize.png"/>
+                                            <Setter Property="Margin" Value="0,2,0,0"/>
+                                            <Setter Property="Width" Value="25"/>
+                                        </Style>
+                                    </Image.Style>
+                                </Image>
+                                <Label Name="CloseButton" MouseLeftButtonDown="CloseButton_MouseLeftButtonDown">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Content" Value="X"/>
+                                            <Setter Property="Foreground" Value="#1c4b82"/>
+                                            <Setter Property="FontWeight" Value="ExtraBold"/>
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                            <Setter Property="VerticalAlignment" Value="Center"/>
+                                            <Setter Property="FontSize" Value="18" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#f76262"/>
+                                                    <Setter Property="Foreground" Value="#dae1e7"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </DockPanel>
+                        </Border>
+                    </Grid>
+                </Border>
+                <Border Name="Items" Grid.Row="1">
+                    <!--Put items with in a slider-->
+                    <Slider></Slider>
+                </Border>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1">
+            <!--Main schemer part. Make a mesh structure-->
+        </Border>
+    </Grid>
+</Window>
