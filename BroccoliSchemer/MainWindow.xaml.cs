@@ -1,17 +1,7 @@
-﻿using System;
+﻿using BroccoliSchemer.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BroccoliSchemer
 {
@@ -23,7 +13,51 @@ namespace BroccoliSchemer
         public MainWindow()
         {
             InitializeComponent();
+            Components.ItemsSource = GetComponents();
         }
+
+        private List<Component> GetComponents()
+        {
+            return new List<Component>() {
+                new Component()
+                {
+                    Name = "Graphics Card",
+                    ImagePath = @"\Resources\ComponentImages\GraphicsCard.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\GraphicsCard.png"
+                },
+                new Component()
+                {
+                    Name = "Headphones",
+                    ImagePath = @"\Resources\ComponentImages\Headphones.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\Headphones.png"
+                },
+                new Component()
+                {
+                    Name = "Keyboard",
+                    ImagePath = @"\Resources\ComponentImages\Keyboard.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\Keyboard.png"
+                },
+                new Component()
+                {
+                    Name = "Mainboard",
+                    ImagePath = @"\Resources\ComponentImages\Mainboard.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\Mainboard.png"
+                },
+                new Component()
+                {
+                    Name = "Mainboard 2",
+                    ImagePath = @"\Resources\ComponentImages\Mainboard2.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\Mainboard2.png"
+                },
+                new Component()
+                {
+                    Name = "Monitor",
+                    ImagePath = @"\Resources\ComponentImages\Monitor.png"
+                    //ImagePath = @"..\BroccoliSchemer.Resources\Resources\ComponentImages\Monitor.png"
+                }
+            };
+        }
+
         private void CloseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.Close();
