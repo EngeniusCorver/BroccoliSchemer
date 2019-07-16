@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:BroccoliSchemer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary Source="/Design/Style/Style.xaml"/>
     </Application.Resources>
 </Application>

@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BroccoliSchemer"
         mc:Ignorable="d"
+        Icon="Design/Icon/icon.png"
         Title="BroccoliSchemer" Name="MainAppWindow" MinHeight="768" MinWidth="1024" ResizeMode="NoResize" WindowStyle="None" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <Grid.RowDefinitions>
-
             <RowDefinition>
                 <RowDefinition.Style>
                     <Style TargetType="RowDefinition">
@@ -114,92 +114,99 @@
                                 <ColumnDefinition Width="40*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="SliderLeft" DockPanel.Dock="Left" Grid.Column="0">
-                                <StackPanel>
-                                    <Image x:Name="LeftButton" Source="/Resources/ButtonImages/Left.png" Margin="5"/>
-                                </StackPanel>
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                        <Setter Property="BorderThickness" Value="0"/>
-                                        <Setter Property="VerticalAlignment" Value="Stretch"/>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
-                            <ListView Grid.Column="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderThickness="0" BorderBrush="Transparent" x:Name="Components" ItemsSource="{Binding Component}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Border Margin="10" BorderBrush="LightGray" BorderThickness="1" Padding="10" CornerRadius="5">
-                                            <StackPanel VerticalAlignment="Stretch" Orientation="Vertical">
-                                                <Border>
-                                                    <Border.Effect>
-                                                        <DropShadowEffect ShadowDepth="1"/>
-                                                    </Border.Effect>
-                                                    <Border.Background>
-                                                        <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Uniform"/>
-                                                    </Border.Background>
-                                                    <Border.Style>
-                                                        <Style TargetType="Border">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
-                                                                    <Setter Property="Width" Value="20"/>
-                                                                    <Setter Property="Height" Value="20"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
-                                                                    <Setter Property="Width" Value="40"/>
-                                                                    <Setter Property="Height" Value="40"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Border.Style>
+                            <Border Name="SliderLeftBorder" Grid.Column="0" DockPanel.Dock="Left" Style="{DynamicResource MenuBorder}">
+                                <Button x:Name="SliderLeft" Click="SliderLeft_Click" Style="{DynamicResource TransparentButton}">
+                                    <StackPanel>
+                                        <Image x:Name="LeftButton" Source="/Resources/ButtonImages/Left.png" Margin="5"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                            <Border Name="ComponentsListBorder" Grid.Column="1" Style="{DynamicResource MenuBorder}">
+                                <ScrollViewer x:Name="ComponentScroller" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight">
+                                    <ListBox x:Name="Components" ItemsSource="{Binding BaseComponent}" BorderThickness="0">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Padding="10" Style="{DynamicResource MenuBorder}">
+                                                    <StackPanel VerticalAlignment="Stretch" Orientation="Vertical">
+                                                        <Border>
+                                                            <Border.Effect>
+                                                                <DropShadowEffect ShadowDepth="1"/>
+                                                            </Border.Effect>
+                                                            <Border.Background>
+                                                                <ImageBrush ImageSource="{Binding ImagePath}" Stretch="Uniform"/>
+                                                            </Border.Background>
+                                                            <Border.Style>
+                                                                <Style TargetType="Border">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Normal">
+                                                                            <Setter Property="Width" Value="20"/>
+                                                                            <Setter Property="Height" Value="20"/>
+                                                                        </DataTrigger>
+                                                                        <DataTrigger Binding="{Binding WindowState, RelativeSource={RelativeSource AncestorType=Window}}" Value="Maximized">
+                                                                            <Setter Property="Width" Value="40"/>
+                                                                            <Setter Property="Height" Value="40"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Border.Style>
+                                                        </Border>
+                                                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                                                    </StackPanel>
                                                 </Border>
-                                                <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="0,2,0,0"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <StackPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ListView>
-                            <Button x:Name="SliderRight" DockPanel.Dock="Right" Grid.Column="2">
-                                <StackPanel>
-                                    <Image x:Name="RightButton" Source="/Resources/ButtonImages/Right.png" Margin="5"/>
-                                </StackPanel>
-                                <Button.Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="BorderBrush" Value="Transparent"/>
-                                        <Setter Property="BorderThickness" Value="0"/>
-                                    </Style>
-                                </Button.Style>
-                            </Button>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ListBox>
+                                </ScrollViewer>
+                            </Border>
+                            <Border Name="SliderRightBorder" Grid.Column="2" DockPanel.Dock="Right" Style="{DynamicResource MenuBorder}">
+                                <Button x:Name="SliderRight" Click="SliderRight_Click" Style="{DynamicResource TransparentButton}">
+                                    <StackPanel>
+                                        <Image x:Name="RightButton" Source="/Resources/ButtonImages/Right.png" Margin="5"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
                         </Grid>
                     </DockPanel>
                 </Border>
             </Grid>
         </Border>
-        <Border Name="SchemeGrid" Grid.Row="1">
-            <!--Main schemer part. Make a mesh structure-->
-            <Canvas>
-                <Canvas.Background>
-                    <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
-                        <DrawingBrush.Drawing>
-                            <GeometryDrawing>
-                                <GeometryDrawing.Geometry>
-                                    <RectangleGeometry Rect="0,0,15,15"/>
-                                </GeometryDrawing.Geometry>
-                                <GeometryDrawing.Pen>
-                                    <Pen Brush="Gray" Thickness=".5"/>
-                                </GeometryDrawing.Pen>
-                            </GeometryDrawing>
-                        </DrawingBrush.Drawing>
-                    </DrawingBrush>
-                </Canvas.Background>
-            </Canvas>
+        <Border Name="MainGridBorder" Grid.Row="1" Style="{DynamicResource MenuBorder}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Style="{DynamicResource MenuBorder}">
+                    <!--TODO:If paging will be applied, there must be list of pages opened in app-->
+                </Border>
+                <Border Grid.Column="1" Style="{DynamicResource MenuBorder}" MouseLeftButtonUp="CanvasBorder_MouseLeftButtonUp">
+                    <Canvas x:Name="SchemerCanvas">
+                        <Canvas.Background>
+                            <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
+                                <DrawingBrush.Drawing>
+                                    <GeometryDrawing>
+                                        <GeometryDrawing.Geometry>
+                                            <RectangleGeometry Rect="0,0,15,15"/>
+                                        </GeometryDrawing.Geometry>
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Gray" Thickness=".5"/>
+                                        </GeometryDrawing.Pen>
+                                    </GeometryDrawing>
+                                </DrawingBrush.Drawing>
+                            </DrawingBrush>
+                        </Canvas.Background>
+                    </Canvas>
+                </Border>
+                <Border Grid.Column="2" Style="{DynamicResource MenuBorder}">
+                    <!--TODO:WindowControls must be generated according to item's properties-->
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Window>

@@ -55,15 +55,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Design\Style\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Actions\BaseComponentAction.cs" />
+    <Compile Include="Entities\IListable.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Entities\Component.cs" />
+    <Compile Include="Entities\BaseComponent.cs" />
+    <Compile Include="Entities\GraphicsCard.cs" />
+    <Compile Include="Entities\Headphone.cs" />
+    <Compile Include="Entities\Keyboard.cs" />
+    <Compile Include="Entities\Mainboard.cs" />
+    <Compile Include="Entities\Monitor.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -108,7 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ComponentImages\GraphicsCard.png" />
-    <Resource Include="Resources\ComponentImages\Headphones.png" />
+    <Resource Include="Resources\ComponentImages\Headphone.png" />
     <Resource Include="Resources\ComponentImages\Keyboard.png" />
     <Resource Include="Resources\ComponentImages\Mainboard.png" />
     <Resource Include="Resources\ComponentImages\Mainboard2.png" />
