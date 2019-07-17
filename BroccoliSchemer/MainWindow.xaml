@@ -123,7 +123,7 @@
                             </Border>
                             <Border Name="ComponentsListBorder" Grid.Column="1" Style="{DynamicResource MenuBorder}">
                                 <ScrollViewer x:Name="ComponentScroller" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" FlowDirection="LeftToRight">
-                                    <ListBox x:Name="Components" ItemsSource="{Binding BaseComponent}" BorderThickness="0">
+                                    <ListBox x:Name="Components" ItemsSource="{Binding BaseComponent}" BorderThickness="0" SelectionChanged="Components_SelectionChanged">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Border Padding="10" Style="{DynamicResource MenuBorder}">
@@ -183,7 +183,6 @@
                     <ColumnDefinition Width="2*" />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Style="{DynamicResource MenuBorder}">
-                    <!--TODO:If paging will be applied, there must be list of pages opened in app-->
                 </Border>
                 <Border Grid.Column="1" Style="{DynamicResource MenuBorder}" MouseLeftButtonUp="CanvasBorder_MouseLeftButtonUp">
                     <Canvas x:Name="SchemerCanvas">
@@ -204,7 +203,8 @@
                     </Canvas>
                 </Border>
                 <Border Grid.Column="2" Style="{DynamicResource MenuBorder}">
-                    <!--TODO:WindowControls must be generated according to item's properties-->
+                    <StackPanel x:Name="PropertiesPanel">
+                    </StackPanel>
                 </Border>
             </Grid>
         </Border>
