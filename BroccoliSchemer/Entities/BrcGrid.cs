@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace BroccoliSchemer.Entities
 {
-    public class Headphone : BaseComponent
+    public class BrcGrid : BaseComponent, IListable
     {
-        public Headphone(string name, string basePath) : base(name, basePath)
+        public BrcGrid(string name) : base(name)
         {
         }
-
-        public bool IsWireless { get; set; }
     }
 }

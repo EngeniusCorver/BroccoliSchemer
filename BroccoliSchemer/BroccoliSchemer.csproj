@@ -64,17 +64,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="Actions\BaseComponentAction.cs" />
-    <Compile Include="Entities\IListable.cs" />
+    <Compile Include="Actions\ComponentFilterAction.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Entities\BaseComponent.cs" />
-    <Compile Include="Entities\GraphicsCard.cs" />
-    <Compile Include="Entities\Headphone.cs" />
-    <Compile Include="Entities\Keyboard.cs" />
-    <Compile Include="Entities\Mainboard.cs" />
-    <Compile Include="Entities\Monitor.cs" />
+    <Compile Include="Entities\BrcButton.cs" />
+    <Compile Include="Entities\BrcContainer.cs" />
+    <Compile Include="Entities\BrcGrid.cs" />
+    <Compile Include="Entities\BrcSlider.cs" />
+    <Compile Include="Entities\BrcTextBox.cs" />
+    <Compile Include="Entities\IListable.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -118,16 +119,66 @@
     <Resource Include="Design\Colour\colours.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ComponentImages\GraphicsCard.png" />
-    <Resource Include="Resources\ComponentImages\Headphone.png" />
-    <Resource Include="Resources\ComponentImages\Keyboard.png" />
-    <Resource Include="Resources\ComponentImages\Mainboard.png" />
-    <Resource Include="Resources\ComponentImages\Mainboard2.png" />
-    <Resource Include="Resources\ComponentImages\Monitor.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\ButtonImages\Left.png" />
     <Resource Include="Resources\ButtonImages\Right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\ComponentImages\BrcContainer\" />
+    <Folder Include="Resources\ComponentImages\BrcGrid\" />
+    <Folder Include="Resources\ComponentImages\BrcSlider\" />
+    <Folder Include="Resources\ComponentImages\BrcTextBox\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ComponentImages\BrcButton\001-add.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\002-lock.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\003-videocamera.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\004-signal.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\005-cloud.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\006-remove.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\007-done.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\008-download.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\009-equalizer.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\010-error.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\011-fast forward.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\012-favorite.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\013-folder.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\014-headphones.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\015-info.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\016-lightbulb.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\017-like.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\018-location.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\019-loop.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\020-menu.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\021-message.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\022-microphone.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\023-more.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\024-music.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\025-music.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\026-mute.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\027-next.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\028-pause.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\029-play.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\030-play.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\031-previous.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\032-radio.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\033-rec.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\034-repeat.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\035-repeat.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\036-repeat.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\037-rewind.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\038-settings.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\039-share.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\040-shield.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\041-shuffle.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\042-signal.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\043-stop.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\044-store.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\045-upload.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\046-usb.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\047-user.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\048-volume.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\049-volume.png" />
+    <Resource Include="Resources\ComponentImages\BrcButton\050-wifi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

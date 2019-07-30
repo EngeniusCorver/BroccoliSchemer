@@ -6,38 +6,57 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace BroccoliSchemer.Actions
 {
     public class BaseComponentAction
     {
-        private const string BASE_PATH = "../../Resources/ComponentImages/";
         public static List<IListable> GetComponents()
         {
             //Read FileNames
-            string[] componentNames = Directory.GetFiles(BASE_PATH).Select(Path.GetFileNameWithoutExtension).ToArray();
+            string[] componentNames = Directory.GetDirectories(BaseComponent.BASE_PATH);
             List<IListable> Components = new List<IListable>();
-            foreach (var item in componentNames)
+            foreach (var itemType in componentNames)
             {
-                switch (Regex.Replace(item, "[^a-zA-Z]", ""))
+                if (itemType.Contains("BrcButton"))
                 {
-                    case "GraphicsCard":
-                        Components.Add(new GraphicsCard(item, BASE_PATH));
-                        break;
-                    case "Headphone":
-                        Components.Add(new Headphone(item, BASE_PATH));
-                        break;
-                    case "Keyboard":
-                        Components.Add(new Keyboard(item, BASE_PATH));
-                        break;
-                    case "Mainboard":
-                        Components.Add(new Mainboard(item, BASE_PATH));
-                        break;
-                    case "Monitor":
-                        Components.Add(new Monitor(item, BASE_PATH));
-                        break;
-                    default:
-                        throw new Exception("Item Class Couldn't be found. Check item name or class existence!");
+                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    {
+                        Components.Add(new BrcButton(itemName));
+                    }
+                }
+                else if (itemType.Contains("BrcContainer"))
+                {
+                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    {
+                        Components.Add(new BrcContainer(itemName));
+                    }
+                }
+                else if (itemType.Contains("BrcGrid"))
+                {
+                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    {
+                        Components.Add(new BrcGrid(itemName));
+                    }
+                }
+                else if (itemType.Contains("BrcSlider"))
+                {
+                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    {
+                        Components.Add(new BrcSlider(itemName));
+                    }
+                }
+                else if (itemType.Contains("BrcTextBox"))
+                {
+                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    {
+                        Components.Add(new BrcTextBox(itemName));
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Item Class Couldn't be found. Check item name or class existence!");
                 }
             }
             return Components;

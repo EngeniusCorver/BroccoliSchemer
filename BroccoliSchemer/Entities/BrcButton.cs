@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace BroccoliSchemer.Entities
 {
-    public class Keyboard : BaseComponent
+    public class BrcButton : BaseComponent, IListable
     {
-        public Keyboard(string name, string basePath) : base(name, basePath)
+        public BrcButton(string name) : base(name)
         {
         }
-
-        public bool IsWireless { get; set; }
     }
 }
