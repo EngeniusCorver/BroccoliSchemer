@@ -16,8 +16,9 @@ namespace BroccoliSchemer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly List<IListable> ComponentsPlacedOnScreen = new List<IListable>();
+        private readonly Dictionary<FrameworkElement,IListable> ComponentsPlacedOnScreen = new Dictionary<FrameworkElement, IListable>();
         private FrameworkElement previewItem = null;
+        private KeyValuePair<FrameworkElement, IListable> componentToUpdate = new KeyValuePair<FrameworkElement, IListable>();
         public MainWindow()
         {
             InitializeComponent();
@@ -30,29 +31,42 @@ namespace BroccoliSchemer
 
         private void CloseButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void MinimizingButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            this.WindowState = WindowState.Minimized;
+            WindowState = WindowState.Minimized;
         }
 
         private void ChangeStateButton_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.WindowState.Equals(WindowState.Normal))
+            if (WindowState.Equals(WindowState.Normal))
             {
-                this.WindowState = WindowState.Maximized;
+                WindowState = WindowState.Maximized;
             }
             else
             {
-                this.WindowState = WindowState.Normal;
+                WindowState = WindowState.Normal;
             }
         }
 
         private void CanvasBorder_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (Components.SelectedIndex > -1)
+            if (Components.SelectedIndex == -1 && VisualTreeHelper.HitTest(this, e.GetPosition(this)).VisualHit.GetType() != typeof(Canvas)) {
+                FrameworkElement frameworkElement = (FrameworkElement)VisualTreeHelper.HitTest(this, e.GetPosition(this)).VisualHit;
+                foreach (var item in ComponentsPlacedOnScreen.Keys) {
+                    
+                    if (item.Name == frameworkElement.Name) {
+                        Components.SelectedItem = ComponentsPlacedOnScreen[item];
+                        componentToUpdate = new KeyValuePair<FrameworkElement, IListable>(item, ComponentsPlacedOnScreen[item]);
+                        CreateComponentPropertiesControllers();
+                        Components.UnselectAll();
+                        break;
+                    }
+                }
+            }
+            else if (Components.SelectedIndex > -1)
             {
                 GetPropertyValuesForComponent((IListable)Components.SelectedItem);
                 AddComponentToCanvas(false);
@@ -65,11 +79,10 @@ namespace BroccoliSchemer
         private void AddComponentToCanvas(bool isPreviewItem)
         {
             BaseComponent selectedComponent = (BaseComponent)Components.SelectedItem;
-            //Control background color of component from colorPicker. But first, generate colorPicker according to items color properties
             Border border = new Border()
             {
-                Width = selectedComponent.Width,
-                Height = selectedComponent.Height,
+                Width = selectedComponent.ScreenWidth,
+                Height = selectedComponent.ScreenHeight,
                 BorderThickness = new Thickness(selectedComponent.BorderThickness),
                 Background = new ImageBrush(new BitmapImage(new Uri(selectedComponent.ImagePath, UriKind.Relative))),
                 Name = selectedComponent.Name + DateTime.Now.Ticks
@@ -85,12 +98,19 @@ namespace BroccoliSchemer
             }
             SchemerCanvas.Children.Add(border);
             SetComponentPositionOnCanvas(border);
+            ComponentsPlacedOnScreen.Add(border, (IListable)Components.SelectedItem);
         }
 
         private void SetComponentPositionOnCanvas(FrameworkElement frameworkElement)
         {
-            Canvas.SetLeft(frameworkElement, (double)previewItem.GetValue(Canvas.LeftProperty));
-            Canvas.SetTop(frameworkElement, (double)previewItem.GetValue(Canvas.TopProperty));
+            if (componentToUpdate.Key != null) {
+                Canvas.SetLeft(frameworkElement, (double)componentToUpdate.Key.GetValue(Canvas.LeftProperty));
+                Canvas.SetTop(frameworkElement, (double)componentToUpdate.Key.GetValue(Canvas.TopProperty));
+            }
+            else {
+                Canvas.SetLeft(frameworkElement, (double)previewItem.GetValue(Canvas.LeftProperty));
+                Canvas.SetTop(frameworkElement, (double)previewItem.GetValue(Canvas.TopProperty));
+            }
         }
 
         private void GetPropertyValuesForComponent(IListable selectedItem)
@@ -110,8 +130,11 @@ namespace BroccoliSchemer
                 }
                 else if (pt == typeof(double))
                 {
-                    TextBox textBox = (TextBox)LogicalTreeHelper.FindLogicalNode(PropertiesPanel, item.Name);
-                    item.SetValue(selectedItem, Convert.ToDouble(textBox.Text));
+                    if (item.Name != "Width" && item.Name != "Height") 
+                    {
+                        TextBox textBox = (TextBox)LogicalTreeHelper.FindLogicalNode(PropertiesPanel, item.Name);
+                        item.SetValue(selectedItem, Convert.ToDouble(textBox.Text));
+                    }
                 }
                 else if (pt == typeof(decimal))
                 {
@@ -122,7 +145,7 @@ namespace BroccoliSchemer
                 {
                     TextBox textBox = (TextBox)LogicalTreeHelper.FindLogicalNode(PropertiesPanel, "tb" + item.Name);
                     ComboBox comboBox = (ComboBox)LogicalTreeHelper.FindLogicalNode(PropertiesPanel, "cb" + item.Name);
-                    if (textBox.Text != "#00000000")
+                    if (textBox.Text != "#00000000" || string.IsNullOrWhiteSpace(textBox.Text))
                     {
                         item.SetValue(selectedItem, (Color)ColorConverter.ConvertFromString(textBox.Text));
                     }
@@ -140,8 +163,7 @@ namespace BroccoliSchemer
                     }
                 }
             }
-            ComponentsPlacedOnScreen.Add(selectedItem);
-        }
+    }
 
         private void Components_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -169,8 +191,11 @@ namespace BroccoliSchemer
                 }
                 else if (pt == typeof(double))
                 {
-                    double temp = (double)item.GetValue(Components.SelectedItem);
-                    CreatePropertyControllers(PropertiesPanel, item.Name, new TextBox() { Text = temp.ToString(), Style = FindResource("PropertyTextBox") as Style, Name = item.Name });
+                    if (item.Name != "Width" && item.Name != "Height") 
+                    {
+                        double temp = (double)item.GetValue(Components.SelectedItem);
+                        CreatePropertyControllers(PropertiesPanel, item.Name, new TextBox() { Text = temp.ToString(), Style = FindResource("PropertyTextBox") as Style, Name = item.Name });
+                    }
                 }
                 else if (pt == typeof(decimal))
                 {
@@ -220,7 +245,6 @@ namespace BroccoliSchemer
         {
             if (previewItem != null)
             {
-                //SetComponentPositionOnCanvas(previewItem);
                 AlignComponent(previewItem, Mouse.GetPosition(SchemerCanvas).X, Mouse.GetPosition(SchemerCanvas).Y);
             }
         }
@@ -236,6 +260,7 @@ namespace BroccoliSchemer
         private void RemovePreviewItem()
         {
             SchemerCanvas.Children.Remove(previewItem);
+            ComponentsPlacedOnScreen.Remove(previewItem);
             previewItem = null;
         }
 
@@ -249,19 +274,19 @@ namespace BroccoliSchemer
             double min_diff = 50000;
             double x = 0, y = 0;
 
-            if (SchemerCanvas.ActualWidth - frameworkElement.Width - 20 < x_pos)
+            if (SchemerCanvas.ActualWidth - frameworkElement.Width - 5 < x_pos)
             {
                 x_pos = SchemerCanvas.ActualWidth - frameworkElement.Width;
             }
-            if (SchemerCanvas.ActualHeight - frameworkElement.Height - 20 < y_pos)
+            if (SchemerCanvas.ActualHeight - frameworkElement.Height - 5 < y_pos)
             {
                 y_pos = SchemerCanvas.ActualHeight - frameworkElement.Height;
             }
-            if (x_pos < 20)
+            if (x_pos < 10)
             {
                 x_pos = 0;
             }
-            if (y_pos < 20)
+            if (y_pos < 10)
             {
                 y_pos = 0;
             }
@@ -273,11 +298,11 @@ namespace BroccoliSchemer
                 x = (double)item.GetValue(Canvas.LeftProperty);
                 y = (double)item.GetValue(Canvas.TopProperty);
 
-                if ((x - 20 < x_pos) && (x_pos < x + 70)) //left
+                if ((x - 5 < x_pos) && (x_pos < x + 55)) //left
                 {
                     x_diff = Math.Abs(x - x_pos);
                 }
-                if ((y - 20 < y_pos) && (y_pos < y + 70)) //up
+                if ((y - 5 < y_pos) && (y_pos < y + 55)) //up
                 {
                     y_diff = Math.Abs(y - y_pos);
                 }
@@ -298,6 +323,24 @@ namespace BroccoliSchemer
             }
             Canvas.SetLeft(frameworkElement, x_pos);
             Canvas.SetTop(frameworkElement, y_pos);
+        }
+
+        private void CanvasBorder_RightClick(object sender, MouseButtonEventArgs e) {
+            FrameworkElement itemToDelete = (FrameworkElement)VisualTreeHelper.HitTest(this, e.GetPosition(this)).VisualHit;
+            ComponentsPlacedOnScreen.Remove(itemToDelete);
+            SchemerCanvas.Children.Remove(itemToDelete);
+        }
+
+        private void Apply_Click(object sender, RoutedEventArgs e) {
+            if (componentToUpdate.Key != null)
+            {
+                GetPropertyValuesForComponent(componentToUpdate.Value);
+                Components.SelectedItem = componentToUpdate.Value;
+                SchemerCanvas.Children.Remove(componentToUpdate.Key);
+                AddComponentToCanvas(false);
+                componentToUpdate = new KeyValuePair<FrameworkElement, IListable>(null, null);
+                Components.UnselectAll();
+            }
         }
     }
 }

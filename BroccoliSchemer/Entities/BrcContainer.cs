@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BroccoliSchemer.Entities
 {
-    public class BrcContainer : BaseComponent, IListable
-    {
-        public BrcContainer(string name) : base(name)
+    public class BrcContainer : BaseComponent, IListable {
+        public BrcContainer(string name, int height, int width) : base(name, height, width) 
         {
+
         }
     }
 }

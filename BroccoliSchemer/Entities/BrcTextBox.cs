@@ -8,8 +8,9 @@ namespace BroccoliSchemer.Entities
 {
     public class BrcTextBox : BaseComponent, IListable
     {
-        public BrcTextBox(string name) : base(name)
+        public BrcTextBox(string name, int height, int width) : base(name, height, width) 
         {
+
         }
         public string Placeholder { get; set; }
     }

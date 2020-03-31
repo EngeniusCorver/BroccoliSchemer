@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace BroccoliSchemer.Actions
 {
@@ -21,37 +22,48 @@ namespace BroccoliSchemer.Actions
             {
                 if (itemType.Contains("BrcButton"))
                 {
-                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
+                    foreach (var itemPath in Directory.GetFiles(BaseComponent.BASE_PATH + itemType))
                     {
-                        Components.Add(new BrcButton(itemName));
+                        using (Stream stream = File.OpenRead(itemPath)) {
+                            BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                            Components.Add(new BrcButton(Path.GetFileName(itemPath), decoder.Frames[0].PixelHeight, decoder.Frames[0].PixelWidth));
+                        }
                     }
                 }
                 else if (itemType.Contains("BrcContainer"))
                 {
-                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
-                    {
-                        Components.Add(new BrcContainer(itemName));
+                    foreach (var itemPath in Directory.GetFiles(BaseComponent.BASE_PATH + itemType)) {
+                        using (Stream stream = File.OpenRead(itemPath)) {
+                            BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                            Components.Add(new BrcContainer(Path.GetFileName(itemPath), decoder.Frames[0].PixelHeight, decoder.Frames[0].PixelWidth));
+                        }
                     }
                 }
                 else if (itemType.Contains("BrcGrid"))
                 {
-                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
-                    {
-                        Components.Add(new BrcGrid(itemName));
+                    foreach (var itemPath in Directory.GetFiles(BaseComponent.BASE_PATH + itemType)) {
+                        using (Stream stream = File.OpenRead(itemPath)) {
+                            BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                            Components.Add(new BrcGrid(Path.GetFileName(itemPath), decoder.Frames[0].PixelHeight, decoder.Frames[0].PixelWidth));
+                        }
                     }
                 }
                 else if (itemType.Contains("BrcSlider"))
                 {
-                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
-                    {
-                        Components.Add(new BrcSlider(itemName));
+                    foreach (var itemPath in Directory.GetFiles(BaseComponent.BASE_PATH + itemType)) {
+                        using (Stream stream = File.OpenRead(itemPath)) {
+                            BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                            Components.Add(new BrcSlider(Path.GetFileName(itemPath), decoder.Frames[0].PixelHeight, decoder.Frames[0].PixelWidth));
+                        }
                     }
                 }
                 else if (itemType.Contains("BrcTextBox"))
                 {
-                    foreach (var itemName in Directory.GetFiles(BaseComponent.BASE_PATH + itemType).Select(Path.GetFileNameWithoutExtension).ToArray())
-                    {
-                        Components.Add(new BrcTextBox(itemName));
+                    foreach (var itemPath in Directory.GetFiles(BaseComponent.BASE_PATH + itemType)) {
+                        using (Stream stream = File.OpenRead(itemPath)) {
+                            BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.Default);
+                            Components.Add(new BrcTextBox(Path.GetFileName(itemPath), decoder.Frames[0].PixelHeight, decoder.Frames[0].PixelWidth));
+                        }
                     }
                 }
                 else

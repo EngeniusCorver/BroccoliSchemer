@@ -51,4 +51,7 @@
             <TextBlock Text="{Binding Name}"/>
         </StackPanel>
     </DataTemplate>
+    <Style x:Key="ApplyButton" TargetType="Button">
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
 </ResourceDictionary>

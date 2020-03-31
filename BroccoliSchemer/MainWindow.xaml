@@ -176,9 +176,8 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" Style="{DynamicResource MenuBorder}">
                 </Border>
-                <Border Grid.Column="1" Style="{DynamicResource MenuBorder}">
-
-                    <Canvas x:Name="SchemerCanvas" MouseEnter="SchemerCanvas_MouseEnter" MouseMove="SchemerCanvas_MouseMove" MouseLeave="SchemerCanvas_MouseLeave" MouseLeftButtonUp="CanvasBorder_MouseLeftButtonUp">
+                <Border Grid.Column="1" Style="{DynamicResource MenuBorder}" MouseLeftButtonUp="CanvasBorder_MouseLeftButtonUp" MouseRightButtonDown="CanvasBorder_RightClick">
+                    <Canvas x:Name="SchemerCanvas" MouseEnter="SchemerCanvas_MouseEnter" MouseMove="SchemerCanvas_MouseMove" MouseLeave="SchemerCanvas_MouseLeave">
                         <Canvas.Background>
                             <DrawingBrush TileMode="Tile" Viewport="0,0,20,20" ViewportUnits="Absolute">
                                 <DrawingBrush.Drawing>
@@ -200,8 +199,10 @@
                         <Border Style="{DynamicResource MenuBorder}">
                             <Label Content="Properties" Style="{DynamicResource HeaderLabel}"/>
                         </Border>
+                        <Border Style="{DynamicResource MenuBorder}">
+                            <Button Content="Apply" Style="{DynamicResource ApplyButton}" Click="Apply_Click"/>
+                        </Border>
                         <StackPanel x:Name="PropertiesPanel">
-
                         </StackPanel>
                     </StackPanel>
                 </Border>

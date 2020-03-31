@@ -119,10 +119,6 @@
     <Resource Include="Design\Colour\colours.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ButtonImages\Left.png" />
-    <Resource Include="Resources\ButtonImages\Right.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Resources\ComponentImages\BrcContainer\" />
     <Folder Include="Resources\ComponentImages\BrcGrid\" />
     <Folder Include="Resources\ComponentImages\BrcSlider\" />

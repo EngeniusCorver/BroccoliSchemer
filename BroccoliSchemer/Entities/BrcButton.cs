@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace BroccoliSchemer.Entities
 {
-    public class BrcButton : BaseComponent, IListable
-    {
-        public BrcButton(string name) : base(name)
+    public class BrcButton : BaseComponent, IListable {
+        public BrcButton(string name, int height, int width) : base(name, height, width) 
         {
+
         }
     }
 }
